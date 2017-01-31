@@ -1,26 +1,25 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from sympy import *
+from sympy import Matrix
 from ten_prod import ten_prod
+
 
 sqrt2 = 2**.5
 
  # single qubit quantum states
 
 
-s0 = np.array([[1], [0]])
-s1 = np.array([[0], [1]])
+s0 = Matrix([[1], [0]])
+s1 = Matrix([[0], [1]])
 
 # Pauli gates
 
-I = np.array([[1, 0], [0, 1]])
-X = np.array([[0, 1], [1, 0]])
-Y = np.array([[0, -1j], [1j, 0]])
-Z = np.array([[1, 0], [0, -1]])
+I = Matrix([[1, 0], [0, 1]])
+X = Matrix([[0, 1], [1, 0]])
+Y = Matrix([[0, -1j], [1j, 0]])
+Z = Matrix([[1, 0], [0, -1]])
 
 # Hadamard gate
 
-H = 1/sqrt2*np.array([[1, 1], [1, -1]])
+H = 1/sqrt2*Matrix([[1, 1], [1, -1]])
 
 # 1 qubit Hadamard states
 
@@ -42,5 +41,9 @@ b00 = (s00 + s11)/sqrt2
 b01 = (s01 + s10)/sqrt2
 b10 = (s00 - s11)/sqrt2
 b11 = (s01 - s10)/sqrt2
+
+# other operators
+
+Cnot = ten_prod(ten_prod(s0, s0.T), I) + ten_prod(ten_prod(s1, s1.T), X)
 
 

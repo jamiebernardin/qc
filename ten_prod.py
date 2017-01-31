@@ -1,5 +1,5 @@
 __author__ = 'jbernardin'
-import numpy as np
+from sympy import Matrix, zeros
 
 
 # A (X) B
@@ -8,7 +8,7 @@ def ten_prod(a, b):
     nl, nm = b.shape
     rows = nj * nl
     columns = nk * nm
-    tp = np.zeros((rows, columns))
+    tp = zeros(rows, columns)
     for i in range(0, nj):
         for k in range(0, nk):
             for l in range(0, nl):
