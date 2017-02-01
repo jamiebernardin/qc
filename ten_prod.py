@@ -13,6 +13,7 @@ def ten_prod(a, b):
         for k in range(0, nk):
             for l in range(0, nl):
                 for m in range(0, nm):
-                    tp[i*nl+l, k*nk + m] = a[i, k]*b[l, m]
+                    # print("i= " + str(i) + " k= " + str(k) + " l= " + str(l) + " m= " + str(m))
+                    # print (str(i*nl+l) + " , " + str(k*nk +m))
+                    tp[i*nl+l, k*nm + m] = a[i, k]*b[l, m]
     return tp
-
