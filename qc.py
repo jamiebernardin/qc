@@ -5,8 +5,8 @@ from numpy import sqrt
  # single qubit quantum states
 
 
-s0 = Matrix([[1], [0]])
-s1 = Matrix([[0], [1]])
+q0 = Matrix([[1], [0]])
+q1 = Matrix([[0], [1]])
 
 # Pauli gates
 
@@ -21,62 +21,62 @@ H = 1/sqrt(2)*Matrix([[1, 1], [1, -1]])
 
 # 1 qubit Hadamard states
 
-h0 = 1/sqrt(2)*(s0 + s1)
-h1 = 1/sqrt(2)*(s0 - s1)
+h0 = 1/sqrt(2)*(q0 + q1)
+h1 = 1/sqrt(2)*(q0 - q1)
 
 # two qubit states
 
 # standard basis
 
-s00 = ten_prod(s0, s0)
-s10 = ten_prod(s1, s0)
-s01 = ten_prod(s0, s1)
-s11 = ten_prod(s1, s1)
+q00 = ten_prod(q0, q0)
+q10 = ten_prod(q1, q0)
+q01 = ten_prod(q0, q1)
+q11 = ten_prod(q1, q1)
 
-s000 = ten_prod(s00, s0)
-s001 = ten_prod(s00, s1)
-s011 = ten_prod(s01, s1)
-s010 = ten_prod(s01, s0)
-s101 = ten_prod(s10, s1)
-s100 = ten_prod(s10, s0)
-s111 = ten_prod(s11, s1)
-s110 = ten_prod(s11, s0)
+q000 = ten_prod(q00, q0)
+q001 = ten_prod(q00, q1)
+q011 = ten_prod(q01, q1)
+q010 = ten_prod(q01, q0)
+q101 = ten_prod(q10, q1)
+q100 = ten_prod(q10, q0)
+q111 = ten_prod(q11, q1)
+q110 = ten_prod(q11, q0)
 
 # bell states
 
-b00 = (s00 + s11)/sqrt(2)
-b01 = (s01 + s10)/sqrt(2)
-b10 = (s00 - s11)/sqrt(2)
-b11 = (s01 - s10)/sqrt(2)
+b00 = (q00 + q11)/sqrt(2)
+b01 = (q01 + q10)/sqrt(2)
+b10 = (q00 - q11)/sqrt(2)
+b11 = (q01 - q10)/sqrt(2)
 
 # some operators
 
-Cnot = ten_prod(ten_prod(s0, s0.T), I) + ten_prod(ten_prod(s1, s1.T), X)
+Cnot = ten_prod(ten_prod(q0, q0.T), I) + ten_prod(ten_prod(q1, q1.T), X)
 
 # symbolic state for teleportation
 
 a = Symbol('a')
 b = Symbol('b')
-phi = a*s0 + b*s1
+phi = a*q0 + b*q1
 
 t1 = ten_prod(Cnot, I)
 t2 = ten_prod(H, ten_prod(I, I))
 
 alice = t2*t1*ten_prod(phi,b00)
 
-bob00 = (s001.T).dot(alice)*s1 + (s000.T).dot(alice)*s0
-bob01 = (s011.T).dot(alice)*s1 + (s010.T).dot(alice)*s0
-bob10 = (s101.T).dot(alice)*s1 + (s100.T).dot(alice)*s0
-bob11 = (s111.T).dot(alice)*s1 + (s110.T).dot(alice)*s0
+bob00 = 2*((q001.T).dot(alice)*q1 + (q000.T).dot(alice)*q0)
+bob01 = 2*((q011.T).dot(alice)*q1 + (q010.T).dot(alice)*q0)
+bob10 = 2*((q101.T).dot(alice)*q1 + (q100.T).dot(alice)*q0)
+bob11 = 2*((q111.T).dot(alice)*q1 + (q110.T).dot(alice)*q0)
 
-# 00 bit received apply I
-I*bob00 == phi
-# 01 bit received apply X
-X*bob01 == phi
-# 10 bit received apply Z
-Z*bob10 == phi
-# 00 bit received apply Y
-Y*bob11 == phi
+print 'bob receives 00 classical bits applies I operator:'
+print I*bob00
+print 'bob receives 01 classical bits applies X operator:'
+print X*bob01
+print 'bob receives 10 classical bits applies Z operator:'
+print Z*bob10
+print 'bob receives 00 classical bits applies Y operator:'
+print Y*bob11
 
 
 
